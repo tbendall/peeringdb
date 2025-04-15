@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 """ webServe.py: A Python script to provide a web-front end for the main publicPeerings script """
 
-__author__      = "Tristan Bendall/tristan@bendall.eu"
-__version__     = "v1.1"
+__author__      = "Tristan Bendall/tristan@bendall.co" 
+__version__     = "v1.2"
 
 from publicPeerings import *
 

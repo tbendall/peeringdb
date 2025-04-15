@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 """ publicPeerings.py: A Python script to return information on Public Peerings """
 
-__author__      = "Tristan Bendall/tristan@bendall.eu"
-__version__     = "v1.4"
+__author__	  = "Tristan Bendall/tristan@bendall.co" 
+__version__	 = "v1.5"
 
 # Import various libraries
 import json
@@ -19,8 +19,11 @@ from time import *
 
 # Set strings to output to UTF-8
 # Fixes issues with printing tables to file
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
+
+# Not needed in Python3
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 
 # Function for interactive splash page
@@ -52,9 +55,9 @@ def startPage():
 		table.append([(options.index(i)+1),i])
 	
 	# Prints Menu of options
-	print "\n\n"
-	print tabulate([["Menu"]],tablefmt="grid")
-	print tabulate(table,headers="firstrow",tablefmt="grid",numalign="left") 
+	print("\n\n")
+	print(tabulate([["Menu"]],tablefmt="grid"))
+	print(tabulate(table,headers="firstrow",tablefmt="grid",numalign="left"))
 	
 	# Keeps user at Menu
 	while True:
@@ -63,11 +66,11 @@ def startPage():
 	
 		try:	
 	
-			keyInput = int(raw_input("Option: "))
+			keyInput = int(input("Option: "))
 
 		except ValueError as e:
 
-			print tabulate([["Please enter a number"]],tablefmt="grid")
+			print(tabulate([["Please enter a number"]],tablefmt="grid"))
 
 			continue
 		
@@ -80,39 +83,39 @@ def startPage():
 
 				while exitChoice not in ["N","n"] or exitChoice not in ["Y","y"]:
 
-					exitChoice =  raw_input("Are you sure? [y/n]")
+					exitChoice =  input("Are you sure? [y/n]")
 
-	                               	if exitChoice in ["Y","y"]:
-		                
-				               print tabulate([["Exiting..."]],tablefmt="grid")
+					if exitChoice in ["Y","y"]:
+						
+						print(tabulate([["Exiting..."]],tablefmt="grid"))
 
-                	                       sleep(2)
+						sleep(2)
 
-                        	               sys.exit()
+						sys.exit()
 
 					elif exitChoice in ["N","n"]:
 
 						break
-				print "\n\n"
-				print tabulate([["Menu"]],tablefmt="grid")
-				print tabulate(table,headers="firstrow",tablefmt="grid",numalign="left")							
+				print("\n\n")
+				print(tabulate([["Menu"]],tablefmt="grid"))
+				print(tabulate(table,headers="firstrow",tablefmt="grid",numalign="left"))
 				continue
 
 
-			print tabulate([["You chose '{0}' ".format(options[int(keyInput-1)])]])
+			print(tabulate([["You chose '{0}' ".format(options[int(keyInput-1)])]]))
 
-			print "Loading..."
+			print("Loading...")
 		
 			# Runs function directly from dict
 			defDict[int(keyInput)]()
 			
-			print "\n\n"
-			print tabulate([["Menu"]],tablefmt="grid")
-			print tabulate(table,headers="firstrow",tablefmt="grid",numalign="left")
+			print("\n\n")
+			print(tabulate([["Menu"]],tablefmt="grid"))
+			print(tabulate(table,headers="firstrow",tablefmt="grid",numalign="left"))
 	
 		else:
 
-			print  tabulate([["Please pick an option"]],tablefmt="grid")
+			print(tabulate([["Please pick an option"]],tablefmt="grid"))
 
 # Function to connect to PeeringDB and returns the specified Organisation's information
 def apiConnect():
@@ -136,16 +139,16 @@ def filePrintMode(data):
 	# Reads in which function called filePrintMode function
 	printType = data[1]
 
-	#printChoice = raw_input("Press "'P'" to print to file, else <CR> to return to menu... ")
+	#printChoice = input("Press "'P'" to print to file, else <CR> to return to menu... ")
 
 	# Keeps user at Print prompt
 	while True:
 
-		printChoice = raw_input("Press "'P'" to print to file, else <CR> to return to menu... ")
+		printChoice = input("Press "'P'" to print to file, else <CR> to return to menu... ")
 	
 		if printChoice in ["P","p"]:
 	
-			printLoc = raw_input("Please enter file destination; default is home dir... ")
+			printLoc = input("Please enter file destination; default is home dir... ")
 
 			# Checks if <CR> was pressed
 			if not len(printLoc) > 0:
@@ -158,15 +161,15 @@ def filePrintMode(data):
 
 					if os.path.exists(printPath):
 
-						print "\n"
+						print("\n")
 				
-						print "**** File created successfully ****"
+						print("**** File created successfully ****")
 						
 						break
 					
 					else:
 					
-						print "WARNING: File not created"
+						print("WARNING: File not created")
 						
 						continue
 
@@ -174,7 +177,7 @@ def filePrintMode(data):
 			# Validates user-input Path
 			elif not os.path.exists(os.path.abspath("{0}/{1}.txt".format(printLoc,printType))):
 			
-				print "WARNING: Directory not found"
+				print("WARNING: Directory not found")
 				
 			else:
 			
@@ -190,15 +193,15 @@ def filePrintMode(data):
 
 							if os.path.exists(printPath):
 
-								print "\n"
-				                
-								print "**** File created successfully ****"
+								print("\n")
+								
+								print("**** File created successfully ****")
 
 								break
 
 					except Exception as e:
 
-						print e 
+						print(e)
 
 						break
 				
@@ -229,21 +232,21 @@ def returnPublicPeers(*args,**kwargs):
 			
 		else:
 			
-        
+		
 			unique.append([i['ix_id']]) 
-        
+		
 			table.append([i['name'],i['ipaddr4']])
 	
 	outTable = tabulate(table,tablefmt="html")
 	
-	if 'web' not in kwargs:	
+	if 'web' not in kwargs:
 
- 			outTable = [tabulate(table,tablefmt="grid"),"PublicPeers"]
+		outTable = [tabulate(table,tablefmt="grid"),"PublicPeers"]
 				
-			print outTable[0]
+		print(outTable[0])
 	
-			# Calls print function to preset option to print to file
-			filePrintMode(outTable)
+		# Calls print function to preset option to print to file
+		filePrintMode(outTable)
 
 	return outTable
 
@@ -280,7 +283,7 @@ def uniqueOrgPeering():
 	uniPeerings['speedUnique'] = dict(d)
 	
 	# Adds up all speeds (for a later function)
- 	uniPeerings['totSpeedUnique'] = sum((dict(d)).values())
+	uniPeerings['totSpeedUnique'] = sum((dict(d)).values())
 
 	return uniPeerings
 
@@ -364,29 +367,29 @@ def execSum(*args,**kwargs):
 				
 				
 
-        if 'web' not in kwargs:
+	if 'web' not in kwargs:
 
 			outTable = [tabulate(
 
-                                [
+								[
 
-                                        ["Executive Summary"],
-                                        [tabulate([["Total Public Peering Points"],[totalPeerings()]],tablefmt="grid",headers="firstrow")],
-                                        [tabulate([["Unique Peering Points"],[uniqueOrgPeering()['numUnique']]],tablefmt="grid",headers="firstrow")],
-                                        [tabulate([["Total Public Peering Capacity"],["{:,} Gbps Public Peering Capacity".format(int(totalOrgSpeed()['gig']))]],tablefmt="grid",headers="firstrow")],
-                                        [tabulate([["Mean Average # of Standard Deviations of Unique Peering Point Capacity"],["{0}".format(stdDevSpeedIn['deviation'] ) ]],tablefmt="grid",stralign="right")],
-                                        [tabulate([["Standard Deviation of Unique Public Peering Capacity"],["{:,}G".format(int(round(stdDevSpeedIn['meanGig'],2)))]],tablefmt="grid",headers="firstrow",stralign="right")],
-                                        [tabulate([["Mode Average Unique Peering Point Capacity"],["{0}G".format(stdDevSpeedIn['mode'])]],tablefmt="grid",headers="firstrow",stralign="right")]
+										["Executive Summary"],
+										[tabulate([["Total Public Peering Points"],[totalPeerings()]],tablefmt="grid",headers="firstrow")],
+										[tabulate([["Unique Peering Points"],[uniqueOrgPeering()['numUnique']]],tablefmt="grid",headers="firstrow")],
+										[tabulate([["Total Public Peering Capacity"],["{:,} Gbps Public Peering Capacity".format(int(totalOrgSpeed()['gig']))]],tablefmt="grid",headers="firstrow")],
+										[tabulate([["Mean Average # of Standard Deviations of Unique Peering Point Capacity"],["{0}".format(stdDevSpeedIn['deviation'] ) ]],tablefmt="grid",stralign="right")],
+										[tabulate([["Standard Deviation of Unique Public Peering Capacity"],["{:,}G".format(int(round(stdDevSpeedIn['meanGig'],2)))]],tablefmt="grid",headers="firstrow",stralign="right")],
+										[tabulate([["Mode Average Unique Peering Point Capacity"],["{0}G".format(stdDevSpeedIn['mode'])]],tablefmt="grid",headers="firstrow",stralign="right")]
 
 				],tablefmt="fancy_grid",stralign="right")
 
 			,
 			"ExecutiveSummary"]
 
-			print outTable[0]
+			print(outTable[0])
 			
-                        # Calls print function to preset option to print to file
-                        filePrintMode(outTable)
+			# Calls print function to preset option to print to file
+			filePrintMode(outTable)
 
 	return outTable
 
@@ -400,9 +403,9 @@ if __name__ == "__main__":
 
 	except KeyboardInterrupt:
 
-		print "\n"
+		print("\n")
 
-		print tabulate([["Exiting..."]],tablefmt="grid")
+		print(tabulate([["Exiting..."]],tablefmt="grid"))
 
 		sleep(2)
 
