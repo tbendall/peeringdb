@@ -118,12 +118,12 @@ def startPage():
 			print(tabulate([["Please pick an option"]],tablefmt="grid"))
 
 # Function to connect to PeeringDB and returns the specified Organisation's information
-def apiConnect():
+def returnPeeringDetails():
 
 	asn = '46489'
 	pid = '1956'
 
-	baseurl = "http://peeringdb.com/"
+	baseurl = "http://peeringdb.com"
 
 	netUrl = "{0}/api/net/{1}".format(baseurl,str(pid))
 
@@ -132,6 +132,10 @@ def apiConnect():
 	jResult = result.json()['data'][0]['netixlan_set']
 
 	return jResult
+
+
+## Runs returnPeeringDetails() only once and stores in variable
+apiConnect = returnPeeringDetails()
 
 # Function to print out data to file
 def filePrintMode(data):
@@ -212,7 +216,7 @@ def filePrintMode(data):
 # Function to return all public peering grouped by IX name
 def returnPublicPeers(*args,**kwargs):
 
-	jResult = apiConnect()
+	jResult = apiConnect
 
 	table = []
 
@@ -253,7 +257,7 @@ def returnPublicPeers(*args,**kwargs):
 # Function to return total public peerings
 def totalPeerings():
 
-	jResult = apiConnect()
+	jResult = apiConnect
 
 	totPeerings = len(jResult)
 
@@ -262,7 +266,7 @@ def totalPeerings():
 # Function to return total unique public peering points	
 def uniqueOrgPeering():
 
-	jResult = apiConnect()
+	jResult = apiConnect
 
 	unique = []
 
@@ -290,7 +294,7 @@ def uniqueOrgPeering():
 # Function to return total Organisation Speed 	
 def totalOrgSpeed():
 
-	jResult = apiConnect()
+	jResult = apiConnect
 
 	count = 0
 
